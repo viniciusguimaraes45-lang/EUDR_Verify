@@ -1,110 +1,729 @@
 <!DOCTYPE html>
+
 <html lang="pt" data-lang="pt">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Lote #BR-24-09 · Fazenda Vale do Cerrado</title>
-
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,700&family=Fira+Code:wght@300;400&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-
 <style>
 :root {
   --ink: #0E0A06;
   --parch: #F2E8D5;
+  --warm: #E8D9BC;
   --amber: #C98B2A;
   --gold: #E2AC4A;
+  --rust: #8B3A1A;
   --sage: #6B8C6A;
   --fog: #A89F90;
+  --white: #FAF6EE;
 }
 
-*{box-sizing:border-box;margin:0;padding:0}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
 
 body{
-  background: var(--ink);
-  color: var(--parch);
-  font-family: 'Playfair Display', serif;
+background:var(–ink);
+color:var(–parch);
+font-family:‘Playfair Display’,serif;
+overflow-x:hidden;
 }
 
-/* LANG BAR */
+/* grain */
+body::after{
+content:’’;
+position:fixed;inset:0;z-index:1000;pointer-events:none;
+background-image:url(“data:image/svg+xml,%3Csvg viewBox=‘0 0 512 512’ xmlns=‘http://www.w3.org/2000/svg’%3E%3Cfilter id=‘n’%3E%3CfeTurbulence type=‘fractalNoise’ baseFrequency=‘0.75’ numOctaves=‘4’ stitchTiles=‘stitch’/%3E%3C/filter%3E%3Crect width=‘100%25’ height=‘100%25’ filter=‘url(%23n)’ opacity=‘0.05’/%3E%3C/svg%3E”);
+opacity:.4;mix-blend-mode:overlay;
+}
+
+/* ── LANG TOGGLE ── */
 .lang-bar{
-  position:fixed;top:0;left:0;right:0;
-  display:flex;justify-content:flex-end;
-  padding:1rem 2rem;
-  background:#0E0A06;
+position:fixed;top:0;left:0;right:0;z-index:500;
+display:flex;justify-content:flex-end;align-items:center;
+padding:.7rem 2rem;
+background:rgba(14,10,6,.85);
+backdrop-filter:blur(12px);
+border-bottom:1px solid rgba(226,172,74,.1);
 }
 .lang-btn{
-  font-family:'Fira Code', monospace;
-  font-size:.7rem;
-  padding:.4rem 1rem;
-  border:1px solid #555;
-  background:none;
-  color:#ccc;
-  cursor:pointer;
+font-family:‘Fira Code’,monospace;
+font-size:.65rem;letter-spacing:.25em;text-transform:uppercase;
+padding:.35rem .9rem;border:1px solid rgba(226,172,74,.25);
+background:transparent;color:var(–fog);cursor:pointer;
+transition:all .3s;border-radius:2px;
 }
-.lang-btn.active{color:#E2AC4A;border-color:#E2AC4A}
+.lang-btn.active{background:rgba(226,172,74,.12);color:var(–gold);border-color:rgba(226,172,74,.5);}
+.lang-btn:hover{color:var(–gold);}
+.lang-sep{color:var(–fog);font-family:‘Fira Code’,monospace;font-size:.65rem;margin:0 .5rem;opacity:.4}
 
-/* HERO */
+/* EUDR badge */
+.eudr-pill{
+display:flex;align-items:center;gap:.5rem;
+margin-right:auto;
+border:1px solid rgba(107,140,106,.4);
+padding:.3rem .8rem;border-radius:2px;
+background:rgba(107,140,106,.08);
+}
+.eudr-dot{width:6px;height:6px;border-radius:50%;background:var(–sage);animation:blink 2s infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.eudr-text{font-family:‘Fira Code’,monospace;font-size:.6rem;letter-spacing:.2em;color:var(–sage);}
+
+/* ── HERO ── */
 .hero{
-  min-height:100vh;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  padding:6rem 2rem;
+min-height:100vh;
+padding:7rem clamp(1.5rem,6vw,5rem) 4rem;
+display:grid;
+grid-template-columns:1fr 1fr;
+align-items:center;
+gap:4rem;
+position:relative;
+overflow:hidden;
 }
 
-.hero-title{
-  font-size:3rem;
+.hero-bg{
+position:absolute;inset:0;
+background:
+radial-gradient(ellipse 60% 70% at 80% 50%,rgba(201,139,42,.14) 0%,transparent 65%),
+radial-gradient(ellipse 40% 60% at 15% 80%,rgba(139,58,26,.2) 0%,transparent 55%),
+linear-gradient(150deg,#0E0A06 0%,#1C1008 55%,#120B04 100%);
 }
+
+.hero-ring{
+position:absolute;
+right:-5vw;top:50%;transform:translateY(-50%);
+width:52vw;height:52vw;max-width:650px;max-height:650px;
+border-radius:50%;
+background:radial-gradient(circle at 38% 32%,#3A1E09,#0E0702);
+border:1px solid rgba(226,172,74,.1);
+box-shadow:inset 0 0 100px rgba(201,139,42,.08),0 0 140px rgba(14,10,6,.9);
+}
+.hero-ring::before{content:’’;position:absolute;inset:10%;border-radius:50%;border:1px solid rgba(226,172,74,.07);}
+.hero-ring::after{content:’’;position:absolute;inset:22%;border-radius:50%;border:1px solid rgba(226,172,74,.04);}
+
+.hero-left{position:relative;z-index:5;}
+
+.lot-id{
+font-family:‘Fira Code’,monospace;font-size:.7rem;
+letter-spacing:.35em;text-transform:uppercase;
+color:var(–amber);margin-bottom:1.2rem;
+opacity:0;animation:up 1s .2s both;
+}
+
+h1.hero-title{
+font-size:clamp(3.2rem,7vw,6rem);
+font-weight:400;line-height:.95;
+letter-spacing:-.02em;
+opacity:0;animation:up 1s .4s both;
+}
+h1.hero-title em{font-style:italic;color:var(–gold);}
+
+.hero-origin{
+display:flex;align-items:center;gap:.8rem;
+margin:1.2rem 0 2rem;
+opacity:0;animation:up 1s .55s both;
+}
+.origin-flag{font-size:1.2rem;}
+.origin-text{font-family:‘Fira Code’,monospace;font-size:.72rem;letter-spacing:.2em;color:var(–fog);}
 
 .hero-desc{
-  margin-top:1rem;
-  color:var(--fog);
+font-size:1.05rem;line-height:1.85;color:var(–fog);
+font-weight:400;max-width:420px;font-style:italic;
+opacity:0;animation:up 1s .7s both;
+border-left:2px solid rgba(226,172,74,.3);
+padding-left:1.2rem;
 }
 
-/* QR */
+.hero-scores{
+display:flex;gap:2rem;margin-top:2.5rem;
+opacity:0;animation:up 1s .9s both;
+}
+.score{text-align:center;}
+.score-n{display:block;font-size:2.4rem;font-weight:400;color:var(–gold);line-height:1;}
+.score-l{display:block;font-family:‘Fira Code’,monospace;font-size:.55rem;letter-spacing:.25em;text-transform:uppercase;color:var(–fog);margin-top:.35rem;}
+
+.hero-right{
+position:relative;z-index:5;
+display:flex;flex-direction:column;gap:1.5rem;
+opacity:0;animation:up 1s 1.1s both;
+}
+
+/* verified card */
+.verified-card{
+background:rgba(107,140,106,.08);
+border:1px solid rgba(107,140,106,.25);
+border-radius:6px;padding:1.5rem;
+}
+.verified-header{
+display:flex;align-items:center;gap:.7rem;margin-bottom:1rem;
+}
+.verified-icon{font-size:1.2rem;}
+.verified-title{font-family:‘Fira Code’,monospace;font-size:.65rem;letter-spacing:.25em;text-transform:uppercase;color:var(–sage);}
+.verified-rows{}
+.vrow{
+display:flex;justify-content:space-between;align-items:center;
+padding:.5rem 0;border-bottom:1px solid rgba(255,255,255,.05);
+font-size:.9rem;
+}
+.vrow:last-child{border:none;}
+.vkey{color:var(–fog);font-weight:400;}
+.vval{color:var(–parch);font-family:‘Fira Code’,monospace;font-size:.75rem;}
+.vval.ok{color:var(–sage);}
+
+/* map card */
+.map-card{
+border:1px solid rgba(226,172,74,.12);
+border-radius:6px;overflow:hidden;
+aspect-ratio:16/7;
+position:relative;
+background:
+repeating-linear-gradient(0deg,transparent,transparent 28px,rgba(226,172,74,.03) 28px,rgba(226,172,74,.03) 29px),
+repeating-linear-gradient(90deg,transparent,transparent 28px,rgba(226,172,74,.03) 28px,rgba(226,172,74,.03) 29px),
+linear-gradient(135deg,#1A0E06,#0E0702);
+display:flex;align-items:center;justify-content:center;
+}
+.map-pin-wrap{position:relative;display:flex;align-items:center;justify-content:center;}
+.map-pulse{
+position:absolute;width:48px;height:48px;border-radius:50%;
+border:1px solid rgba(226,172,74,.4);
+animation:pulse 2.5s infinite;
+}
+.map-pulse2{
+position:absolute;width:72px;height:72px;border-radius:50%;
+border:1px solid rgba(226,172,74,.15);
+animation:pulse 2.5s .5s infinite;
+}
+@keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.15);opacity:.4}}
+.map-dot{width:10px;height:10px;border-radius:50%;background:var(–gold);box-shadow:0 0 16px rgba(226,172,74,.7);}
+.map-tag{
+position:absolute;bottom:1rem;left:1rem;
+font-family:‘Fira Code’,monospace;font-size:.6rem;letter-spacing:.2em;color:var(–fog);
+}
+.map-coords{
+position:absolute;top:1rem;right:1rem;
+font-family:‘Fira Code’,monospace;font-size:.6rem;letter-spacing:.1em;color:var(–amber);
+}
+
+/* ── SECTIONS ── */
+section{padding:clamp(4rem,9vw,7rem) clamp(1.5rem,6vw,5rem);position:relative;}
+section:nth-child(odd){background:#140C05;}
+section:nth-child(even){background:#0E0A06;}
+
+.stag{
+font-family:‘Fira Code’,monospace;font-size:.65rem;
+letter-spacing:.35em;text-transform:uppercase;color:var(–amber);
+margin-bottom:.8rem;display:block;
+}
+h2.stitle{
+font-size:clamp(2rem,4vw,3.2rem);font-weight:400;
+color:var(–parch);margin-bottom:.5rem;line-height:1.05;
+}
+h2.stitle em{color:var(–gold);font-style:italic;}
+
+/* ── NOTAS SENSORIAIS ── */
+.wheel{
+display:grid;grid-template-columns:repeat(3,1fr);gap:1px;
+background:rgba(226,172,74,.08);border:1px solid rgba(226,172,74,.08);
+margin-top:2.5rem;
+}
+.wheel-cell{
+background:#140C05;padding:2rem 1.5rem;
+transition:background .35s;cursor:default;
+}
+.wheel-cell:hover{background:#1E1008;}
+.wc-emoji{font-size:1.6rem;display:block;margin-bottom:.8rem;}
+.wc-name{font-size:1.2rem;font-weight:400;color:var(–parch);display:block;margin-bottom:.3rem;}
+.wc-note{font-family:‘Fira Code’,monospace;font-size:.65rem;letter-spacing:.15em;color:var(–fog);}
+.wc-bar{height:3px;background:rgba(226,172,74,.1);margin-top:.8rem;border-radius:2px;overflow:hidden;}
+.wc-fill{height:100%;background:linear-gradient(to right,var(–amber),var(–gold));border-radius:2px;transition:width .6s ease;}
+
+/* ── TORRA ── */
+.torra-wrap{
+display:grid;grid-template-columns:1fr 1fr;gap:5rem;
+align-items:start;margin-top:2rem;
+}
+.spectrum{margin-top:2rem;}
+.spec-bar{
+height:10px;border-radius:5px;
+background:linear-gradient(to right,#FFF3CD,#D4A017,#8B4513,#4A1F0A,#1A0802);
+position:relative;margin-bottom:.7rem;
+}
+.spec-needle{
+position:absolute;top:50%;transform:translateY(-50%);
+width:20px;height:20px;border-radius:50%;
+background:var(–white);border:3px solid var(–gold);
+left:55%;
+box-shadow:0 0 14px rgba(226,172,74,.6);
+}
+.spec-labels{
+display:flex;justify-content:space-between;
+font-family:‘Fira Code’,monospace;font-size:.55rem;
+letter-spacing:.18em;color:var(–fog);text-transform:uppercase;
+}
+.torra-params{
+display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-top:2rem;
+}
+.tparam{
+padding:1.2rem;border:1px solid rgba(226,172,74,.1);border-radius:4px;
+}
+.tparam-v{display:block;font-size:1.5rem;font-weight:400;color:var(–gold);}
+.tparam-k{display:block;font-family:‘Fira Code’,monospace;font-size:.55rem;letter-spacing:.2em;color:var(–fog);margin-top:.3rem;text-transform:uppercase;}
+.roast-steps{display:flex;flex-direction:column;gap:1rem;}
+.rstep{
+display:flex;gap:1.2rem;align-items:flex-start;
+padding:1.3rem;border:1px solid rgba(226,172,74,.07);
+border-radius:4px;transition:border-color .3s;
+}
+.rstep:hover{border-color:rgba(226,172,74,.2);}
+.rnum{font-family:‘Fira Code’,monospace;font-size:.6rem;color:var(–amber);min-width:35px;margin-top:.2rem;}
+.rstep h4{font-size:1rem;font-weight:400;color:var(–parch);margin-bottom:.3rem;}
+.rstep p{font-family:‘Fira Code’,monospace;font-size:.65rem;color:var(–fog);line-height:1.6;}
+
+/* ── BREW GUIDE ── */
+.brew-tabs{display:flex;gap:.5rem;margin:2rem 0 1.5rem;flex-wrap:wrap;}
+.btab{
+font-family:‘Fira Code’,monospace;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;
+padding:.45rem 1.1rem;border:1px solid rgba(226,172,74,.15);
+background:transparent;color:var(–fog);cursor:pointer;border-radius:2px;
+transition:all .3s;
+}
+.btab.active,.btab:hover{background:rgba(226,172,74,.1);color:var(–gold);border-color:rgba(226,172,74,.4);}
+
+.brew-panel{display:none;}
+.brew-panel.active{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:rgba(226,172,74,.07);border:1px solid rgba(226,172,74,.07);}
+.bparam{background:#0E0A06;padding:1.5rem;}
+.bparam-v{display:block;font-size:1.4rem;font-weight:400;color:var(–gold);}
+.bparam-k{display:block;font-family:‘Fira Code’,monospace;font-size:.55rem;letter-spacing:.2em;color:var(–fog);margin-top:.4rem;text-transform:uppercase;}
+
+/* ── EUDR ── */
+.eudr-grid{
+display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+gap:1rem;margin-top:2.5rem;
+}
+.eudr-card{
+padding:1.8rem;border:1px solid rgba(107,140,106,.15);
+border-radius:4px;background:rgba(107,140,106,.05);
+transition:border-color .3s;
+}
+.eudr-card:hover{border-color:rgba(107,140,106,.3);}
+.ec-status{
+display:inline-flex;align-items:center;gap:.5rem;
+font-family:‘Fira Code’,monospace;font-size:.6rem;letter-spacing:.2em;
+color:var(–sage);text-transform:uppercase;margin-bottom:1rem;
+}
+.ec-dot{width:7px;height:7px;border-radius:50%;background:var(–sage);}
+.ec-title{font-size:1.1rem;color:var(–parch);margin-bottom:.5rem;}
+.ec-desc{font-family:‘Fira Code’,monospace;font-size:.65rem;color:var(–fog);line-height:1.7;}
+
+/* ── QR CODE ── */
+.qr-section{text-align:center;display:flex;flex-direction:column;align-items:center;}
 .qr-box{
-  margin-top:2rem;
-  background:#F2E8D5;
-  padding:20px;
-  display:inline-block;
+margin:2.5rem auto;padding:2rem;
+background:var(–parch);
+border-radius:6px;display:inline-flex;
+box-shadow:0 0 0 1px rgba(226,172,74,.2),0 24px 80px rgba(0,0,0,.6);
+position:relative;
+}
+.qr-corner{position:absolute;width:18px;height:18px;border-color:var(–amber);border-style:solid;}
+.qr-corner.tl{top:-1px;left:-1px;border-width:2px 0 0 2px;}
+.qr-corner.tr{top:-1px;right:-1px;border-width:2px 2px 0 0;}
+.qr-corner.bl{bottom:-1px;left:-1px;border-width:0 0 2px 2px;}
+.qr-corner.br{bottom:-1px;right:-1px;border-width:0 2px 2px 0;}
+.qr-desc{font-size:1rem;color:var(–fog);font-style:italic;max-width:380px;line-height:1.8;}
+.qr-url{font-family:‘Fira Code’,monospace;font-size:.62rem;letter-spacing:.22em;color:var(–amber);text-transform:uppercase;margin-top:1rem;}
+
+/* ── FOOTER ── */
+footer{
+background:var(–ink);padding:2.5rem clamp(1.5rem,6vw,5rem);
+display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;
+border-top:1px solid rgba(226,172,74,.08);
+}
+.flogo{font-size:1.2rem;font-weight:400;color:var(–parch);}
+.flogo em{color:var(–gold);font-style:italic;}
+.fcopy{font-family:‘Fira Code’,monospace;font-size:.58rem;letter-spacing:.18em;color:var(–fog);}
+
+/* ── ANIMATIONS ── */
+@keyframes up{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+.rev{opacity:0;transform:translateY(28px);transition:opacity .75s ease,transform .75s ease;}
+.rev.in{opacity:1;transform:translateY(0);}
+
+/* ── BILINGUAL ── */
+[data-en]{display:none;}
+html[data-lang=“en”] [data-pt]{display:none!important;}
+html[data-lang=“en”] [data-en]{display:revert!important;}
+
+/* responsive */
+@media(max-width:768px){
+.hero{grid-template-columns:1fr;gap:2rem;}
+.hero-ring{display:none;}
+.torra-wrap{grid-template-columns:1fr;}
+.wheel{grid-template-columns:1fr 1fr;}
 }
 </style>
-</head>
 
+</head>
 <body>
 
+<!-- LANG BAR -->
+
 <div class="lang-bar">
+  <div class="eudr-pill">
+    <span class="eudr-dot"></span>
+    <span class="eudr-text" data-pt>EUDR Verificado</span>
+    <span class="eudr-text" data-en>EUDR Verified</span>
+  </div>
   <button class="lang-btn active" id="btn-pt" onclick="setLang('pt')">PT</button>
+  <span class="lang-sep">·</span>
   <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
 </div>
 
+<!-- ══════════════ HERO ══════════════ -->
+
 <div class="hero">
-  <h1 class="hero-title">
-    Arábica <em>Natural</em>
-  </h1>
+  <div class="hero-bg"></div>
+  <div class="hero-ring"></div>
 
-  <p class="hero-desc">
-    Café especial do Cerrado Mineiro, com notas de chocolate e laranja madura.
-  </p>
+  <div class="hero-left">
+    <span class="lot-id">
+      <span data-pt>Lote Especial · #BR-24-09</span>
+      <span data-en>Special Lot · #BR-24-09</span>
+    </span>
 
-  <div class="qr-box">
-    <div id="qrcode"></div>
+```
+<h1 class="hero-title">
+  Arábica<br><em data-pt>Natural</em><em data-en>Natural</em>
+</h1>
+
+<div class="hero-origin">
+  <span class="origin-flag">🇧🇷</span>
+  <span class="origin-text">Cerrado Mineiro · Minas Gerais · Brasil</span>
+</div>
+
+<p class="hero-desc">
+  <span data-pt>Grãos cultivados a 1.280 metros, secos em terreiro suspenso sob o sol do Cerrado. Complexidade natural, doçura intensa, acidez envolvente.</span>
+  <span data-en>Beans grown at 1,280 metres, sun-dried on raised beds under the Cerrado sky. Natural complexity, intense sweetness, vibrant acidity.</span>
+</p>
+
+<div class="hero-scores">
+  <div class="score"><span class="score-n">88</span><span class="score-l" data-pt>Pontos SCA</span><span class="score-l" data-en>SCA Score</span></div>
+  <div class="score"><span class="score-n">420</span><span class="score-l" data-pt>Kg · Lote</span><span class="score-l" data-en>Kg · Lot</span></div>
+  <div class="score"><span class="score-n">1280m</span><span class="score-l" data-pt>Altitude</span><span class="score-l" data-en>Altitude</span></div>
+  <div class="score"><span class="score-n">2024</span><span class="score-l" data-pt>Colheita</span><span class="score-l" data-en>Harvest</span></div>
+</div>
+```
+
+  </div>
+
+  <div class="hero-right">
+    <!-- Verified card -->
+    <div class="verified-card">
+      <div class="verified-header">
+        <span class="verified-icon">🛰️</span>
+        <span class="verified-title" data-pt>Verificação de Origem</span>
+        <span class="verified-title" data-en>Origin Verification</span>
+      </div>
+      <div class="verified-rows">
+        <div class="vrow"><span class="vkey" data-pt>Desflorestação após 2020</span><span class="vkey" data-en>Deforestation post-2020</span><span class="vval ok">✓ None</span></div>
+        <div class="vrow"><span class="vkey" data-pt>Análise por satélite</span><span class="vkey" data-en>Satellite analysis</span><span class="vval ok">✓ Validated</span></div>
+        <div class="vrow"><span class="vkey" data-pt>Conformidade legal</span><span class="vkey" data-en>Legal compliance</span><span class="vval ok">✓ Confirmed</span></div>
+        <div class="vrow"><span class="vkey">EUDR DDS</span><span class="vval ok">✓ Ready</span></div>
+        <div class="vrow"><span class="vkey" data-pt>Risco classificado</span><span class="vkey" data-en>Risk level</span><span class="vval" style="color:var(--amber)">🟡 Médio / Medium</span></div>
+      </div>
+    </div>
+
+```
+<!-- Map -->
+<div class="map-card">
+  <div class="map-pin-wrap">
+    <div class="map-pulse2"></div>
+    <div class="map-pulse"></div>
+    <div class="map-dot"></div>
+  </div>
+  <span class="map-tag" data-pt>Cerrado Mineiro · MG · Brasil</span>
+  <span class="map-tag" data-en>Cerrado Mineiro · MG · Brazil</span>
+  <span class="map-coords">-18.924° S · -47.613° W</span>
+</div>
+```
+
   </div>
 </div>
 
+<!-- ══════════════ NOTAS SENSORIAIS ══════════════ -->
+
+<section>
+  <span class="stag rev" data-pt>01 · Perfil Sensorial</span>
+  <span class="stag rev" data-en>01 · Sensory Profile</span>
+  <h2 class="stitle rev"><span data-pt>O que este café<br><em>conta</em></span><span data-en>What this coffee<br><em>tells</em></span></h2>
+
+  <div class="wheel rev">
+    <div class="wheel-cell">
+      <span class="wc-emoji">🍊</span>
+      <span class="wc-name" data-pt>Laranja Madura</span><span class="wc-name" data-en>Ripe Orange</span>
+      <span class="wc-note" data-pt>cítrico · doce</span><span class="wc-note" data-en>citric · sweet</span>
+      <div class="wc-bar"><div class="wc-fill" style="width:82%"></div></div>
+    </div>
+    <div class="wheel-cell">
+      <span class="wc-emoji">🍫</span>
+      <span class="wc-name" data-pt>Chocolate Escuro</span><span class="wc-name" data-en>Dark Chocolate</span>
+      <span class="wc-note" data-pt>achocolatado · profundo</span><span class="wc-note" data-en>chocolatey · deep</span>
+      <div class="wc-bar"><div class="wc-fill" style="width:75%"></div></div>
+    </div>
+    <div class="wheel-cell">
+      <span class="wc-emoji">🍯</span>
+      <span class="wc-name" data-pt>Mel de Flores</span><span class="wc-name" data-en>Flower Honey</span>
+      <span class="wc-note" data-pt>floral · persistente</span><span class="wc-note" data-en>floral · lingering</span>
+      <div class="wc-bar"><div class="wc-fill" style="width:88%"></div></div>
+    </div>
+    <div class="wheel-cell">
+      <span class="wc-emoji">🌰</span>
+      <span class="wc-name" data-pt>Amêndoa Torrada</span><span class="wc-name" data-en>Roasted Almond</span>
+      <span class="wc-note" data-pt>nozes · seco</span><span class="wc-note" data-en>nutty · dry</span>
+      <div class="wc-bar"><div class="wc-fill" style="width:65%"></div></div>
+    </div>
+    <div class="wheel-cell">
+      <span class="wc-emoji">🍬</span>
+      <span class="wc-name" data-pt>Caramelo</span><span class="wc-name" data-en>Caramel</span>
+      <span class="wc-note" data-pt>doce · redondo</span><span class="wc-note" data-en>sweet · round</span>
+      <div class="wc-bar"><div class="wc-fill" style="width:79%"></div></div>
+    </div>
+    <div class="wheel-cell">
+      <span class="wc-emoji">🌸</span>
+      <span class="wc-name" data-pt>Jasmim</span><span class="wc-name" data-en>Jasmine</span>
+      <span class="wc-note" data-pt>delicado · final longo</span><span class="wc-note" data-en>delicate · long finish</span>
+      <div class="wc-bar"><div class="wc-fill" style="width:58%"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ TORRA ══════════════ -->
+
+<section>
+  <span class="stag rev" data-pt>02 · Perfil de Torra</span>
+  <span class="stag rev" data-en>02 · Roast Profile</span>
+  <h2 class="stitle rev"><span data-pt>A arte da<br><em>torra</em></span><span data-en>The art of<br><em>roasting</em></span></h2>
+
+  <div class="torra-wrap">
+    <div>
+      <p class="rev" style="color:var(--fog);font-size:1rem;line-height:1.9;font-style:italic;margin-bottom:1.5rem;">
+        <span data-pt>Torra média-clara em 11 minutos e 45 segundos, preservando a acidez brilhante e as notas frutadas características do processamento natural.</span>
+        <span data-en>Medium-light roast developed in 11 minutes 45 seconds, preserving the bright acidity and fruity notes characteristic of natural processing.</span>
+      </p>
+
+```
+  <div class="spectrum rev">
+    <div class="spec-bar"><div class="spec-needle"></div></div>
+    <div class="spec-labels">
+      <span data-pt>Clara</span><span data-en>Light</span>
+      <span data-pt>Média-Clara</span><span data-en>Med-Light</span>
+      <span data-pt>Média</span><span data-en>Medium</span>
+      <span data-pt>Escura</span><span data-en>Dark</span>
+    </div>
+  </div>
+
+  <div class="torra-params rev">
+    <div class="tparam"><span class="tparam-v">205°C</span><span class="tparam-k" data-pt>Temp. Final</span><span class="tparam-k" data-en>Drop Temp</span></div>
+    <div class="tparam"><span class="tparam-v">11:45</span><span class="tparam-k" data-pt>Duração</span><span class="tparam-k" data-en>Duration</span></div>
+    <div class="tparam"><span class="tparam-v">Agtron #65</span><span class="tparam-k" data-pt>Cor de Torra</span><span class="tparam-k" data-en>Roast Color</span></div>
+    <div class="tparam"><span class="tparam-v">10kg</span><span class="tparam-k" data-pt>Carga</span><span class="tparam-k" data-en>Batch Size</span></div>
+  </div>
+</div>
+
+<div class="roast-steps rev">
+  <div class="rstep">
+    <span class="rnum">01</span>
+    <div>
+      <h4 data-pt>Carga & Aquecimento</h4><h4 data-en>Charge & Heat</h4>
+      <p data-pt>188°C de carga · tambor pré-aquecido 25min</p>
+      <p data-en>188°C charge temp · drum pre-heated 25min</p>
+    </div>
+  </div>
+  <div class="rstep">
+    <span class="rnum">02</span>
+    <div>
+      <h4 data-pt>Ponto de Virada</h4><h4 data-en>Turning Point</h4>
+      <p data-pt>1min 52seg · 82°C · início endotérmico</p>
+      <p data-en>1min 52sec · 82°C · endothermic start</p>
+    </div>
+  </div>
+  <div class="rstep">
+    <span class="rnum">03</span>
+    <div>
+      <h4 data-pt>Primeiro Crack</h4><h4 data-en>First Crack</h4>
+      <p data-pt>9min 20seg · 198°C · liberação de CO₂</p>
+      <p data-en>9min 20sec · 198°C · CO₂ release</p>
+    </div>
+  </div>
+  <div class="rstep">
+    <span class="rnum">04</span>
+    <div>
+      <h4 data-pt>Drop Final</h4><h4 data-en>Drop</h4>
+      <p data-pt>11min 45seg · 205°C · Agtron #65 · resfriamento imediato</p>
+      <p data-en>11min 45sec · 205°C · Agtron #65 · rapid cooling</p>
+    </div>
+  </div>
+</div>
+```
+
+  </div>
+</section>
+
+<!-- ══════════════ BREW ══════════════ -->
+
+<section>
+  <span class="stag rev" data-pt>03 · Preparo Ideal</span>
+  <span class="stag rev" data-en>03 · Brew Guide</span>
+  <h2 class="stitle rev"><span data-pt>Perfect <em>Serve</em></span><span data-en>Perfect <em>Serve</em></span></h2>
+  <p class="rev" style="color:var(--fog);font-size:1rem;font-style:italic;line-height:1.9;max-width:520px;margin-bottom:0">
+    <span data-pt>Água filtrada entre 91–94°C. Moa na hora. Use balança digital.</span>
+    <span data-en>Filtered water at 91–94°C. Grind fresh. Use a digital scale.</span>
+  </p>
+
+  <div class="brew-tabs rev">
+    <button class="btab active" onclick="showBrew('esp',this)">Espresso</button>
+    <button class="btab" onclick="showBrew('v60',this)">V60</button>
+    <button class="btab" onclick="showBrew('fp',this)">French Press</button>
+    <button class="btab" onclick="showBrew('aero',this)">AeroPress</button>
+  </div>
+
+  <div id="brew-esp" class="brew-panel active rev">
+    <div class="bparam"><span class="bparam-v">18g</span><span class="bparam-k" data-pt>Dose</span><span class="bparam-k" data-en>Dose</span></div>
+    <div class="bparam"><span class="bparam-v">36g</span><span class="bparam-k" data-pt>Rendimento</span><span class="bparam-k" data-en>Yield</span></div>
+    <div class="bparam"><span class="bparam-v">28–32s</span><span class="bparam-k" data-pt>Extração</span><span class="bparam-k" data-en>Extraction</span></div>
+    <div class="bparam"><span class="bparam-v">93°C</span><span class="bparam-k" data-pt>Temperatura</span><span class="bparam-k" data-en>Temperature</span></div>
+    <div class="bparam"><span class="bparam-v">9 bar</span><span class="bparam-k" data-pt>Pressão</span><span class="bparam-k" data-en>Pressure</span></div>
+  </div>
+  <div id="brew-v60" class="brew-panel rev">
+    <div class="bparam"><span class="bparam-v">15g</span><span class="bparam-k" data-pt>Café</span><span class="bparam-k" data-en>Coffee</span></div>
+    <div class="bparam"><span class="bparam-v">250g</span><span class="bparam-k" data-pt>Água</span><span class="bparam-k" data-en>Water</span></div>
+    <div class="bparam"><span class="bparam-v">3:00</span><span class="bparam-k" data-pt>Tempo Total</span><span class="bparam-k" data-en>Total Time</span></div>
+    <div class="bparam"><span class="bparam-v">92°C</span><span class="bparam-k" data-pt>Temperatura</span><span class="bparam-k" data-en>Temperature</span></div>
+    <div class="bparam"><span class="bparam-v">30g/45s</span><span class="bparam-k">Bloom</span></div>
+  </div>
+  <div id="brew-fp" class="brew-panel rev">
+    <div class="bparam"><span class="bparam-v">60g/L</span><span class="bparam-k" data-pt>Proporção</span><span class="bparam-k" data-en>Ratio</span></div>
+    <div class="bparam"><span class="bparam-v">94°C</span><span class="bparam-k" data-pt>Temperatura</span><span class="bparam-k" data-en>Temperature</span></div>
+    <div class="bparam"><span class="bparam-v">4:00</span><span class="bparam-k" data-pt>Infusão</span><span class="bparam-k" data-en>Steep Time</span></div>
+    <div class="bparam"><span class="bparam-v">Grossa</span><span class="bparam-k" data-pt>Moagem</span><span class="bparam-k" data-en>Grind</span></div>
+  </div>
+  <div id="brew-aero" class="brew-panel rev">
+    <div class="bparam"><span class="bparam-v">15g</span><span class="bparam-k" data-pt>Café</span><span class="bparam-k" data-en>Coffee</span></div>
+    <div class="bparam"><span class="bparam-v">200g</span><span class="bparam-k" data-pt>Água</span><span class="bparam-k" data-en>Water</span></div>
+    <div class="bparam"><span class="bparam-v">91°C</span><span class="bparam-k" data-pt>Temperatura</span><span class="bparam-k" data-en>Temperature</span></div>
+    <div class="bparam"><span class="bparam-v">2:00</span><span class="bparam-k" data-pt>Tempo</span><span class="bparam-k" data-en>Time</span></div>
+    <div class="bparam"><span class="bparam-v">Invertido</span><span class="bparam-k" data-pt>Método</span><span class="bparam-k" data-en>Method</span></div>
+  </div>
+</section>
+
+<!-- ══════════════ EUDR ══════════════ -->
+
+<section>
+  <span class="stag rev" data-pt>04 · Conformidade EUDR</span>
+  <span class="stag rev" data-en>04 · EUDR Compliance</span>
+  <h2 class="stitle rev"><span data-pt>Rastreado.<br><em>Verificado.</em></span><span data-en>Traced.<br><em>Verified.</em></span></h2>
+  <p class="rev" style="color:var(--fog);font-size:1rem;font-style:italic;line-height:1.9;max-width:560px">
+    <span data-pt>Este lote cumpre integralmente os requisitos do Regulamento (UE) 2023/1115. Toda a cadeia foi mapeada, os dados verificados e a DDS está preparada.</span>
+    <span data-en>This lot fully complies with Regulation (EU) 2023/1115. The entire supply chain has been mapped, data verified, and the DDS is ready for submission.</span>
+  </p>
+
+  <div class="eudr-grid">
+    <div class="eudr-card rev">
+      <div class="ec-status"><span class="ec-dot"></span><span data-pt>Verificado</span><span data-en>Verified</span></div>
+      <div class="ec-title" data-pt>Origem Rastreável</div><div class="ec-title" data-en>Traceable Origin</div>
+      <div class="ec-desc" data-pt>Fazenda identificada com coordenadas GPS. Área de produção mapeada por satélite.</div>
+      <div class="ec-desc" data-en>Farm identified with GPS coordinates. Production area mapped via satellite imagery.</div>
+    </div>
+    <div class="eudr-card rev">
+      <div class="ec-status"><span class="ec-dot"></span><span data-pt>Confirmado</span><span data-en>Confirmed</span></div>
+      <div class="ec-title" data-pt>Sem Desflorestação</div><div class="ec-title" data-en>Deforestation-Free</div>
+      <div class="ec-desc" data-pt>Análise de imagens de satélite confirma ausência de desflorestação após 31/12/2020.</div>
+      <div class="ec-desc" data-en>Satellite imagery analysis confirms no deforestation occurred after 31/12/2020.</div>
+    </div>
+    <div class="eudr-card rev">
+      <div class="ec-status"><span class="ec-dot"></span><span data-pt>Preparado</span><span data-en>Ready</span></div>
+      <div class="ec-title">Due Diligence Statement</div>
+      <div class="ec-desc" data-pt>DDS completa e pronta para submissão. Toda a documentação organizada e arquivada.</div>
+      <div class="ec-desc" data-en>Complete DDS ready for submission. All documentation organised and filed.</div>
+    </div>
+    <div class="eudr-card rev">
+      <div class="ec-status"><span class="ec-dot" style="background:var(--amber)"></span><span data-pt style="color:var(--amber)">Médio</span><span data-en style="color:var(--amber)">Medium</span></div>
+      <div class="ec-title" data-pt>Classificação de Risco</div><div class="ec-title" data-en>Risk Classification</div>
+      <div class="ec-desc" data-pt>Brasil classificado como risco médio. Documentação adicional obtida e validada.</div>
+      <div class="ec-desc" data-en>Brazil classified as medium risk. Additional documentation obtained and validated.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ QR CODE ══════════════ -->
+
+<section class="qr-section">
+  <span class="stag rev" data-pt>05 · Acesso Rápido</span>
+  <span class="stag rev" data-en>05 · Quick Access</span>
+  <h2 class="stitle rev"><span data-pt>Escaneie &amp; <em>Partilhe</em></span><span data-en>Scan &amp; <em>Share</em></span></h2>
+  <p class="qr-desc rev">
+    <span data-pt>Aponte a câmera para aceder ao perfil completo deste lote e partilhar com compradores e parceiros.</span>
+    <span data-en>Point your camera to access the full profile of this lot and share with buyers and partners.</span>
+  </p>
+  <div class="qr-box rev">
+    <div class="qr-corner tl"></div>
+    <div class="qr-corner tr"></div>
+    <div class="qr-corner bl"></div>
+    <div class="qr-corner br"></div>
+    <div id="qrcode"></div>
+  </div>
+  <p class="qr-url">viniciusguimaraes45-lang.github.io / EUDR_Verify</p>
+</section>
+
+<!-- FOOTER -->
+
+<footer>
+  <div class="flogo">Fazenda <em>Vale do Cerrado</em></div>
+  <span class="fcopy">© 2024 · Lote #BR-24-09 · Arábica Natural · Cerrado Mineiro · EUDR Ready</span>
+</footer>
+
 <script>
+// Language toggle
 function setLang(l){
   document.documentElement.setAttribute('data-lang',l);
   document.getElementById('btn-pt').classList.toggle('active',l==='pt');
   document.getElementById('btn-en').classList.toggle('active',l==='en');
 }
 
+// Brew tabs
+function showBrew(id,btn){
+  document.querySelectorAll('.brew-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.btab').forEach(b=>b.classList.remove('active'));
+  document.getElementById('brew-'+id).classList.add('active');
+  btn.classList.add('active');
+}
+
+// QR Code
 new QRCode(document.getElementById("qrcode"),{
   text:"https://viniciusguimaraes45-lang.github.io/EUDR_Verify/",
-  width:200,
-  height:200
+  width:200,height:200,
+  colorDark:"#0E0A06",colorLight:"#F2E8D5",
+  correctLevel:QRCode.CorrectLevel.H
 });
+
+// Scroll reveal
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');obs.unobserve(e.target);}});
+},{threshold:.1});
+document.querySelectorAll('.rev').forEach(el=>obs.observe(el));
+
+// Animate bars on reveal
+const barObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.querySelectorAll('.wc-fill').forEach(f=>{
+        const w=f.style.width;f.style.width='0';
+        setTimeout(()=>{f.style.width=w;},100);
+      });
+      barObs.unobserve(e.target);
+    }
+  });
+},{threshold:.3});
+document.querySelectorAll('.wheel').forEach(el=>barObs.observe(el));
 </script>
 
 </body>
